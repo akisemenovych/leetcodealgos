@@ -100,6 +100,10 @@ public:
 	// 35. Search Insert Position
 	int searchInsert(std::vector<int>& nums, int target);
 	// 36. Valid Sudoku
+	bool isValidSudoku(std::vector<std::vector<char>>& board);
+	bool isValidSudoku2(std::vector<std::vector<char>>& board);
+	// 37. Sudoku Solver
+	void solveSudoku(std::vector<std::vector<char>>& board);
 
 private:
 	int expandAroundCenter(std::string const& s, int left, int right);

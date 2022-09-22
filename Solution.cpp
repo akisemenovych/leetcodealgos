@@ -1125,3 +1125,113 @@ int Solution::searchInsert(std::vector<int>& nums, int target)
 
 	return static_cast<int>(median);
 }
+
+bool Solution::isValidSudoku(std::vector<std::vector<char>>& board)
+{
+	std::vector<std::vector<bool>> rows(9, std::vector(9, false));
+	std::vector<std::vector<bool>> columns(9, std::vector(9, false));
+	std::vector<std::vector<bool>> squares(9, std::vector(9, false));
+	size_t square = 0, number = 0;
+
+	for (size_t row = 0; row < 9; ++row)
+		for (size_t column = 0; column < 9; ++column) {
+			if (board[row][column] == '.')
+				continue;
+
+			number = board[row][column] - '1';
+			square = row / 3 + (column / 3) * 3;
+			if (rows[row][number] || columns[column][number] || squares[square][number])
+				return false;
+
+			rows[row][number] = true;
+			columns[column][number] = true;
+			squares[square][number] = true;
+		}
+
+	return true;
+}
+
+bool Solution::isValidSudoku2(std::vector<std::vector<char>>& board)
+{
+	std::vector<std::set<char>> rows = {
+			{}, {}, {},
+			{}, {}, {},
+			{}, {}, {}
+	};
+	std::vector<std::set<char>> columns = {
+		{}, {}, {},
+		{}, {}, {},
+		{}, {}, {}
+	};
+	std::vector<std::vector<std::set<char>>> squares = {
+		{ {} , {} , {} },
+		{ {} , {} , {} },
+		{ {} , {} , {} },
+	};
+
+	for (size_t row = 0; row < 9; ++row)
+		for (size_t column = 0; column < 9; ++column) {
+			if (board[row][column] == '.')
+				continue;
+			if (rows[row].count(board[row][column]) ||
+				columns[column].count(board[row][column]) ||
+				squares[row / 3][column / 3].count(board[row][column])) {
+				return false;
+			}
+			rows[row].insert(board[row][column]);
+			columns[column].insert(board[row][column]);
+			squares[row / 3][column / 3].insert(board[row][column]);
+		}
+
+	return true;
+}
+
+void Solution::solveSudoku(std::vector<std::vector<char>>& board)
+{
+	std::vector<std::vector<bool>> rows(9, std::vector(9, true));
+	std::vector<std::vector<bool>> columns(9, std::vector(9, true));
+	std::vector<std::vector<bool>> squares(9, std::vector(9, true));
+	size_t square = 0, number = 0;
+	bool solved = false;
+	for (size_t row = 0; row < 9; ++row)
+		for (size_t column = 0; column < 9; ++column) {
+			if (board[row][column] == '.')
+				continue;
+
+			number = board[row][column] - '1';
+			square = row / 3 + (column / 3) * 3;
+
+			rows[row][number] = false;
+			columns[column][number] = false;
+			squares[square][number] = false;
+		}
+
+	std::function<void(size_t, size_t)> backtracking =
+		[&solved, &rows, &columns, &squares, &board, &backtracking](size_t row, size_t column) {
+		if (row == 9) {
+			solved = true;
+			return;
+		}
+		if (board[row][column] != '.')
+			backtracking(row + (column + 1) / 9, (column + 1) % 9);
+		else {
+			size_t square = row / 3 + (column / 3) * 3;
+			for (size_t number = 0; number < 9; ++number) {
+				if (rows[row][number] && columns[column][number] && squares[square][number]) {
+					rows[row][number] = false;
+					columns[column][number] = false;
+					squares[square][number] = false;
+					board[row][column] = static_cast<char>('1' + number);
+					backtracking(row + (column + 1) / 9, (column + 1) % 9);
+					if (!solved) {
+						rows[row][number] = true;
+						columns[column][number] = true;
+						squares[square][number] = true;
+						board[row][column] = '.';
+					}
+				}
+			}
+		}
+	};
+	backtracking(0, 0);
+}

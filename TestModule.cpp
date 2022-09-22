@@ -1072,3 +1072,64 @@ BOOST_AUTO_TEST_CASE(SearchInsert_TEST_5)
 	//std::cout << "RESULT : " << solution.searchInsert(input, 9) << "\n";
 	BOOST_CHECK(solution.searchInsert(input, 9) == 8);
 }
+
+BOOST_AUTO_TEST_CASE(IsValidSudoku_TEST_1)
+{
+	Solution solution;
+	std::vector<std::vector<char>> input = {
+		{'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+		{'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+		{'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+		{'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+		{'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+		{'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+		{'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+		{'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+		{'.', '.', '.', '.', '8', '.', '.', '7', '9'}
+	};
+	BOOST_CHECK(true == solution.isValidSudoku(input));
+}
+
+BOOST_AUTO_TEST_CASE(IsValidSudoku_TEST_2)
+{
+	Solution solution;
+	std::vector<std::vector<char>> input = {
+		{'8', '3', '.', '.', '7', '.', '.', '.', '.'},
+		{'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+		{'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+		{'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+		{'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+		{'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+		{'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+		{'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+		{'.', '.', '.', '.', '8', '.', '.', '7', '9'}
+	};
+	BOOST_CHECK(false == solution.isValidSudoku(input));
+}
+
+BOOST_AUTO_TEST_CASE(SolveSudoku_TEST_1)
+{
+	Solution solution;
+	std::vector<std::vector<char>> input = {
+		{'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+		{'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+		{'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+		{'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+		{'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+		{'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+		{'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+		{'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+		{'.', '.', '.', '.', '8', '.', '.', '7', '9'}
+	};
+	solution.solveSudoku(input);
+	//std::string output;
+	//for (auto& row : input) {
+	//	for (char& ch : row) {
+	//		output += ch;
+	//		output += " ";
+	//	}
+	//	output += '\n';
+	//}
+	//std::cout << "RESULT:\n" << output;
+	BOOST_CHECK(solution.isValidSudoku(input));
+}
