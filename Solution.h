@@ -104,6 +104,10 @@ public:
 	bool isValidSudoku2(std::vector<std::vector<char>>& board);
 	// 37. Sudoku Solver
 	void solveSudoku(std::vector<std::vector<char>>& board);
+	// 38. Count and Say
+	std::string countAndSay(int n);
+	// 39. Combination Sum
+	std::vector<std::vector<int>> combinationSum(std::vector<int>& candidates, int target);
 
 private:
 	int expandAroundCenter(std::string const& s, int left, int right);

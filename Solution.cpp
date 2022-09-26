@@ -1154,9 +1154,9 @@ bool Solution::isValidSudoku(std::vector<std::vector<char>>& board)
 bool Solution::isValidSudoku2(std::vector<std::vector<char>>& board)
 {
 	std::vector<std::set<char>> rows = {
-			{}, {}, {},
-			{}, {}, {},
-			{}, {}, {}
+		{}, {}, {},
+		{}, {}, {},
+		{}, {}, {}
 	};
 	std::vector<std::set<char>> columns = {
 		{}, {}, {},
@@ -1234,4 +1234,57 @@ void Solution::solveSudoku(std::vector<std::vector<char>>& board)
 		}
 	};
 	backtracking(0, 0);
+}
+
+std::string Solution::countAndSay(int n)
+{
+	int count = 0;
+	std::string output("1");
+	std::vector<std::pair<char, int>> terms;
+
+	std::function<void(std::string&, std::vector<std::pair<char, int>>&)> stringToTerm =
+		[&count](std::string& stringToTranslate, std::vector<std::pair<char, int>>& terms) {
+		terms.clear();
+		for (size_t indx = 0; indx < stringToTranslate.size(); ++indx) {
+			++count;
+			if (indx == stringToTranslate.size() - 1 || stringToTranslate[indx] != stringToTranslate[indx + 1]) {
+				terms.push_back(std::make_pair(stringToTranslate[indx], count));
+				count = 0;
+			}
+		}
+
+		count = 0;
+		stringToTranslate = "";
+		for (auto& term : terms)
+			stringToTranslate += std::to_string(term.second) + term.first;
+	};
+
+	for (size_t indx = 0; indx < n - 1; ++indx)
+		stringToTerm(output, terms);
+
+	return output;
+}
+
+std::vector<std::vector<int>> Solution::combinationSum(std::vector<int>& candidates, int target)
+{
+	std::vector<std::vector<int>> output;
+
+	std::function<void(size_t, std::vector<int>, int)> backtracking =
+		[candidates, target, &output, &backtracking](size_t indx, std::vector<int> unusedCandidates, int totalSum) {
+		if (totalSum == target) {
+			output.push_back(unusedCandidates);
+			return;
+		}
+
+		if (indx > candidates.size() - 1 || totalSum > target)
+			return;
+
+		unusedCandidates.push_back(candidates[indx]);
+		backtracking(indx, unusedCandidates, totalSum + candidates[indx]);
+		unusedCandidates.pop_back();
+		backtracking(indx + 1, unusedCandidates, totalSum);
+	};
+	backtracking(0, std::vector<int>(), 0);
+
+	return output;
 }

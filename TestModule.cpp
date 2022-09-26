@@ -1133,3 +1133,56 @@ BOOST_AUTO_TEST_CASE(SolveSudoku_TEST_1)
 	//std::cout << "RESULT:\n" << output;
 	BOOST_CHECK(solution.isValidSudoku(input));
 }
+
+BOOST_AUTO_TEST_CASE(CountAndSay_TEST_1)
+{
+	Solution solution;
+	BOOST_CHECK(solution.countAndSay(1) == std::string("1"));
+}
+
+BOOST_AUTO_TEST_CASE(CountAndSay_TEST_2)
+{
+	Solution solution;
+	BOOST_CHECK(solution.countAndSay(2) == std::string("11"));
+}
+
+BOOST_AUTO_TEST_CASE(CountAndSay_TEST_3)
+{
+	Solution solution;
+	BOOST_CHECK(solution.countAndSay(3) == std::string("21"));
+}
+
+BOOST_AUTO_TEST_CASE(CountAndSay_TEST_4)
+{
+	Solution solution;
+	BOOST_CHECK(solution.countAndSay(4) == std::string("1211"));
+}
+
+BOOST_AUTO_TEST_CASE(CountAndSay_TEST_5)
+{
+	Solution solution;
+	BOOST_CHECK(solution.countAndSay(15) == std::string("311311222113111231131112132112311321322112111312211312111322212311322113212221"));
+}
+
+BOOST_AUTO_TEST_CASE(CombinationSum_TEST_1)
+{
+	Solution solution;
+	std::vector<int> input{ 2,3,6,7 };
+	std::vector<std::vector<int>> expectedOutput{ {2, 2, 3},{7} };
+	BOOST_CHECK(solution.combinationSum(input, 7) == expectedOutput);
+}
+
+BOOST_AUTO_TEST_CASE(CombinationSum_TEST_2)
+{
+	Solution solution;
+	std::vector<int> input{ 2,3,5 };
+	std::vector<std::vector<int>> expectedOutput{ {2,2,2,2}, {2,3,3}, {3,5} };
+	BOOST_CHECK(solution.combinationSum(input, 8) == expectedOutput);
+}
+
+BOOST_AUTO_TEST_CASE(CombinationSum_TEST_3)
+{
+	Solution solution;
+	std::vector<int> input{ 2 };
+	BOOST_CHECK(solution.combinationSum(input, 1).empty());
+}
