@@ -1186,3 +1186,66 @@ BOOST_AUTO_TEST_CASE(CombinationSum_TEST_3)
 	std::vector<int> input{ 2 };
 	BOOST_CHECK(solution.combinationSum(input, 1).empty());
 }
+
+BOOST_AUTO_TEST_CASE(CombinationSum2_TEST_1)
+{
+	Solution solution;
+	std::vector<int> input{ 10,1,2,7,6,1,5 };
+	std::vector<std::vector<int>> expectedOutput{
+		{1,1,6},
+		{1,2,5},
+		{1,7},
+		{2,6}
+	};
+	//std::vector<std::vector<int>> executedOutput = solution.combinationSum2(input, 8);
+	//std::string output;
+	//for (auto& row : executedOutput) {
+	//	for (int& ch : row) {
+	//		output += std::to_string(ch);
+	//		output += " ";
+	//	}
+	//	output += '\n';
+	//}
+	//std::cout << "RESULT:\n" << output;
+	BOOST_CHECK(solution.combinationSum2(input, 8) == expectedOutput);
+	//BOOST_CHECK(executedOutput == expectedOutput);
+}
+
+BOOST_AUTO_TEST_CASE(CombinationSum2_TEST_2)
+{
+	Solution solution;
+	std::vector<int> input{ 2,5,2,1,2 };
+	std::vector<std::vector<int>> expectedOutput{
+		{1,2,2},
+		{5}
+	};
+	BOOST_CHECK(solution.combinationSum2(input, 5) == expectedOutput);
+}
+
+BOOST_AUTO_TEST_CASE(CombinationSum2_TEST_3)
+{
+	Solution solution;
+	std::vector<int> input{ 2 };
+	BOOST_CHECK(solution.combinationSum2(input, 5).empty());
+}
+
+BOOST_AUTO_TEST_CASE(FirstMissingPositive_TEST_1)
+{
+	Solution solution;
+	std::vector<int> input{ 1,2,0 };
+	BOOST_CHECK(solution.firstMissingPositive(input) == 3);
+}
+
+BOOST_AUTO_TEST_CASE(FirstMissingPositive_TEST_2)
+{
+	Solution solution;
+	std::vector<int> input{ 3,4,-1,1 };
+	BOOST_CHECK(solution.firstMissingPositive(input) == 2);
+}
+
+BOOST_AUTO_TEST_CASE(FirstMissingPositive_TEST_3)
+{
+	Solution solution;
+	std::vector<int> input{ 7,8,9,11,12 };
+	BOOST_CHECK(solution.firstMissingPositive(input) == 1);
+}

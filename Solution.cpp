@@ -1270,21 +1270,64 @@ std::vector<std::vector<int>> Solution::combinationSum(std::vector<int>& candida
 	std::vector<std::vector<int>> output;
 
 	std::function<void(size_t, std::vector<int>, int)> backtracking =
-		[candidates, target, &output, &backtracking](size_t indx, std::vector<int> unusedCandidates, int totalSum) {
+		[candidates, target, &output, &backtracking](size_t indx, std::vector<int> usedCandidates, int totalSum) {
 		if (totalSum == target) {
-			output.push_back(unusedCandidates);
+			output.push_back(usedCandidates);
 			return;
 		}
 
 		if (indx > candidates.size() - 1 || totalSum > target)
 			return;
 
-		unusedCandidates.push_back(candidates[indx]);
-		backtracking(indx, unusedCandidates, totalSum + candidates[indx]);
-		unusedCandidates.pop_back();
-		backtracking(indx + 1, unusedCandidates, totalSum);
+		usedCandidates.push_back(candidates[indx]);
+		backtracking(indx, usedCandidates, totalSum + candidates[indx]);
+		usedCandidates.pop_back();
+		backtracking(indx + 1, usedCandidates, totalSum);
 	};
 	backtracking(0, std::vector<int>(), 0);
 
 	return output;
+}
+
+std::vector<std::vector<int>> Solution::combinationSum2(std::vector<int>& candidates, int target)
+{
+	std::vector<std::vector<int>> output;
+	if (candidates.empty())
+		return output;
+	std::sort(std::begin(candidates), std::end(candidates));
+
+	std::function<void(size_t, std::vector<int>, int)> backtracking =
+		[candidates, target, &output, &backtracking](size_t indx, std::vector<int> usedCandidates, int totalSum) {
+
+		if (totalSum == target) {
+			output.push_back(usedCandidates);
+			return;
+		}
+
+		for (size_t nextIndx = indx; nextIndx < candidates.size(); ++nextIndx) {
+			if (nextIndx > indx && candidates[nextIndx] == candidates[nextIndx - 1])
+				continue;
+			if (totalSum + candidates[nextIndx] > target)
+				return;
+			usedCandidates.push_back(candidates[nextIndx]);
+			backtracking(nextIndx + 1, usedCandidates, totalSum + candidates[nextIndx]);
+			usedCandidates.pop_back();
+		}
+	};
+	backtracking(0, std::vector<int>(), 0);
+
+	return output;
+}
+
+int Solution::firstMissingPositive(std::vector<int>& nums)
+{
+	for (size_t indx = 0; indx < nums.size(); ++indx)
+		while (nums[indx] > 0 && nums[indx] <= nums.size() && nums[indx] != nums[nums[indx] - 1])
+			std::swap(nums[indx], nums[nums[indx] - 1]);
+
+	for (size_t indx = 0; indx < nums.size(); ++indx)
+		if (nums[indx] != indx + 1)
+			return static_cast<int>(indx + 1);
+
+	return static_cast<int>(nums.size() + 1);
 }
