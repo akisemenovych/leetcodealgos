@@ -1249,3 +1249,90 @@ BOOST_AUTO_TEST_CASE(FirstMissingPositive_TEST_3)
 	std::vector<int> input{ 7,8,9,11,12 };
 	BOOST_CHECK(solution.firstMissingPositive(input) == 1);
 }
+
+BOOST_AUTO_TEST_CASE(Trap_TEST_1)
+{
+	Solution solution;
+	std::vector<int> input{ 0,1,0,2,1,0,1,3,2,1,2,1 };
+	BOOST_CHECK(solution.trap(input) == 6);
+}
+
+BOOST_AUTO_TEST_CASE(Trap_TEST_2)
+{
+	Solution solution;
+	std::vector<int> input{ 4,2,0,3,2,5 };
+	BOOST_CHECK(solution.trap(input) == 9);
+}
+
+BOOST_AUTO_TEST_CASE(Trap_TEST_3)
+{
+	Solution solution;
+	std::vector<int> input;
+	BOOST_CHECK(solution.trap(input) == 0);
+}
+
+BOOST_AUTO_TEST_CASE(Trap_TEST_4)
+{
+	Solution solution;
+	std::vector<int> input{ 5,5,1,7,1,1,5,2,7,6 };
+	BOOST_CHECK(solution.trap(input) == 23);
+}
+
+BOOST_AUTO_TEST_CASE(Trap_TEST_5)
+{
+	Solution solution;
+	std::vector<int> input{ 4,2,3 };
+	BOOST_CHECK(solution.trap(input) == 1);
+}
+
+BOOST_AUTO_TEST_CASE(Trap_TEST_6)
+{
+	Solution solution;
+	std::vector<int> input{ 5, 4, 1, 2 };
+	BOOST_CHECK(solution.trap(input) == 1);
+}
+
+BOOST_AUTO_TEST_CASE(Multiply_TEST_1)
+{
+	Solution solution;
+	std::string input1("2");
+	std::string input2("3");
+	std::string expectedResult("6");
+	BOOST_CHECK(solution.multiply(input1, input2) == expectedResult);
+}
+
+BOOST_AUTO_TEST_CASE(Multiply_TEST_2)
+{
+	Solution solution;
+	std::string input1("2");
+	std::string input2("0");
+	std::string expectedResult("0");
+	BOOST_CHECK(solution.multiply(input1, input2) == expectedResult);
+}
+
+BOOST_AUTO_TEST_CASE(Multiply_TEST_3)
+{
+	Solution solution;
+	std::string input1("123");
+	std::string input2("456");
+	std::string expectedResult("56088");
+	BOOST_CHECK(solution.multiply(input1, input2) == expectedResult);
+}
+
+BOOST_AUTO_TEST_CASE(Multiply_TEST_4)
+{
+	Solution solution;
+	std::string input1("100");
+	std::string input2("100");
+	std::string expectedResult("10000");
+	BOOST_CHECK(solution.multiply(input1, input2) == expectedResult);
+}
+
+BOOST_AUTO_TEST_CASE(Multiply_TEST_5)
+{
+	Solution solution;
+	std::string input1("99");
+	std::string input2("99");
+	std::string expectedResult("9801");
+	BOOST_CHECK(solution.multiply(input1, input2) == expectedResult);
+}

@@ -1331,3 +1331,54 @@ int Solution::firstMissingPositive(std::vector<int>& nums)
 
 	return static_cast<int>(nums.size() + 1);
 }
+
+int Solution::trap(std::vector<int>& height)
+{
+	int output = 0;
+	if (height.empty())
+		return output;
+
+	size_t indxLeft = 0;
+	size_t indxRight = height.size() - 1;
+	int maxLeftBarrier = height[indxLeft];
+	int maxRightBarrier = height[indxRight];
+
+	while (indxLeft < indxRight) {
+		if (maxLeftBarrier < maxRightBarrier) {
+			++indxLeft;
+			maxLeftBarrier = std::max(maxLeftBarrier, height[indxLeft]);
+			output += maxLeftBarrier - height[indxLeft];
+		}
+		else {
+			--indxRight;
+			maxRightBarrier = std::max(maxRightBarrier, height[indxRight]);
+			output += maxRightBarrier - height[indxRight];
+		}
+	}
+
+	return output;
+}
+
+std::string Solution::multiply(std::string num1, std::string num2)
+{
+	if (num1 == "0" || num2 == "0")
+		return "0";
+
+	std::string output(num1.size() + num2.size(), '0');
+	std::reverse(num1.begin(), num1.end());
+	std::reverse(num2.begin(), num2.end());
+	int mult = 0;
+
+	for (size_t digitIndx1 = 0; digitIndx1 < num1.size(); ++digitIndx1)
+		for (size_t digitIndx2 = 0; digitIndx2 < num2.size(); ++digitIndx2) {
+			mult = (num1[digitIndx1] - '0') * (num2[digitIndx2] - '0') + (output[digitIndx1 + digitIndx2] - '0');
+			output[digitIndx1 + digitIndx2] = mult % 10 + '0';
+			output[digitIndx1 + digitIndx2 + 1] += mult / 10;
+		}
+
+	while (output.back() == '0')
+		output.pop_back();
+
+	std::reverse(output.begin(), output.end());
+	return output;
+}
