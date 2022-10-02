@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <iterator>
 #include <functional>
+#include <unordered_map>
 
 class Solution {
 public:
@@ -29,6 +30,24 @@ public:
 		ListNode() : val(0), next(nullptr) {}
 		ListNode(int x) : val(x), next(nullptr) {}
 		ListNode(int x, ListNode* next) : val(x), next(next) {}
+	};
+
+	class Node {
+	public:
+		int val;
+		std::vector<Node*> neighbors;
+		Node() {
+			val = 0;
+			neighbors = std::vector<Node*>();
+		}
+		Node(int _val) {
+			val = _val;
+			neighbors = std::vector<Node*>();
+		}
+		Node(int _val, std::vector<Node*> _neighbors) {
+			val = _val;
+			neighbors = _neighbors;
+		}
 	};
 
 public:
@@ -110,12 +129,16 @@ public:
 	std::vector<std::vector<int>> combinationSum(std::vector<int>& candidates, int target);
 	// 40. Combination Sum II
 	std::vector<std::vector<int>> combinationSum2(std::vector<int>& candidates, int target);
-	//41. First Missing Positive
+	// 41. First Missing Positive
 	int firstMissingPositive(std::vector<int>& nums);
-	//42. Trapping Rain Water
+	// 42. Trapping Rain Water
 	int trap(std::vector<int>& height);
-	//43. Multiply Strings
+	// 43. Multiply Strings
 	std::string multiply(std::string num1, std::string num2);
+	// 133. Clone Graph
+	Node* cloneGraph(Node* node);
+	// 207. Course Schedule
+	bool canFinish(int numCourses, std::vector<std::vector<int>>& prerequisites);
 
 private:
 	int expandAroundCenter(std::string const& s, int left, int right);

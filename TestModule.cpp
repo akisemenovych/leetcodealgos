@@ -1336,3 +1336,17 @@ BOOST_AUTO_TEST_CASE(Multiply_TEST_5)
 	std::string expectedResult("9801");
 	BOOST_CHECK(solution.multiply(input1, input2) == expectedResult);
 }
+
+BOOST_AUTO_TEST_CASE(CanFinish_TEST_1)
+{
+	Solution solution;
+	std::vector<std::vector<int>> input{ { 1,0 } };
+	BOOST_CHECK(solution.canFinish(2, input) == true);
+}
+
+BOOST_AUTO_TEST_CASE(CanFinish_TEST_2)
+{
+	Solution solution;
+	std::vector<std::vector<int>> input{ { 1,0 }, { 0,1 } };
+	BOOST_CHECK(solution.canFinish(2, input) == false);
+}

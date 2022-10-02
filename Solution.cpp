@@ -1382,3 +1382,63 @@ std::string Solution::multiply(std::string num1, std::string num2)
 	std::reverse(output.begin(), output.end());
 	return output;
 }
+
+Solution::Node* Solution::cloneGraph(Solution::Node* node)
+{
+	if (nullptr == node)
+		return nullptr;
+
+	std::unordered_map<Node*, Node*> originalToClone;
+	std::unordered_map<Node*, Node*>::iterator itr;
+
+	std::function<Solution::Node* (Solution::Node*)> cloneDFS =
+		[&originalToClone, &itr, &cloneDFS](Solution::Node* node) {
+
+		if (itr = originalToClone.find(node); itr != originalToClone.end())
+			return itr->second;
+
+		Node* clone = new Node(node->val);
+		originalToClone.insert(std::make_pair(node, clone));
+
+		for (auto neighbor : node->neighbors)
+			clone->neighbors.push_back(cloneDFS(neighbor));
+
+		return clone;
+	};
+	
+	return cloneDFS(node);
+}
+
+bool Solution::canFinish(int numCourses, std::vector<std::vector<int>>& prerequisites)
+{
+	std::unordered_map<int, std::set<int>> coursesMap;
+	std::unordered_map<int, std::set<int>>::iterator itr;
+	for (auto& courseDescription : prerequisites)
+			coursesMap[courseDescription[0]].insert(courseDescription[1]);
+
+	std::set<int> coursesVisited;
+
+	std::function<bool(int)> coursesDFS =
+		[&coursesMap, &itr, &coursesVisited, &coursesDFS](int course) {
+
+		if (coursesVisited.count(course))
+			return false;
+		if (itr = coursesMap.find(course); itr == coursesMap.end() || itr->second.empty())
+			return true;
+
+		coursesVisited.insert(course);
+		for (int prerequisite : itr->second)
+			if (!coursesDFS(prerequisite))
+				return false;
+		coursesVisited.erase(course);
+		coursesMap[course].clear();
+
+		return true;
+	};
+
+	for (int numCourse = 0; numCourse < numCourses; ++numCourse)
+		if (!coursesDFS(numCourse))
+			return false;
+
+	return true;
+}
